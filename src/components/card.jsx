@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Shibuya from '../assets/shibuya.jpg'
 export default function CardComponent() {
   return (
     <section>
       <Cards>
         <Card>
-          <Link to="/details"></Link>
+          <Link to="/anime">
+            <img src={Shibuya} alt="shibuya incident acr" />
+          </Link>
         </Card>
       </Cards>
     </section>
@@ -25,4 +28,8 @@ const Card = styled.div`
   border: 2px solid rgba(182, 155, 0, 0.64);
   border-radius: 10px;
   overflow: hidden;
+
+  img{
+    width: 100%;
+  }
 `;

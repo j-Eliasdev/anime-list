@@ -1,5 +1,5 @@
-import CardComponent from "../assets/components/card";
-import HeaderComponent from "../assets/components/headerComponent";
+import CardComponent from "../components/card";
+import HeaderComponent from "../components/headerComponent";
 
 export default function LandingPage() {
   return (
