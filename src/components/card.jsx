@@ -1,26 +1,11 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import Shibuya from '../assets/shibuya.jpg'
-export default function CardComponent() {
-  return (
-    <section>
-      <Cards>
-        <Card>
-          <Link to="/anime">
-            <img src={Shibuya} alt="shibuya incident acr" />
-          </Link>
-        </Card>
-      </Cards>
-    </section>
-  );
+
+// eslint-disable-next-line react/prop-types
+export const CardComponent= ({ children }) => {
+  return <Card>{children}</Card>;
 }
 
-const Cards = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
-`;
+
 const Card = styled.div`
   width: 300px;
   height: 400px;
@@ -29,7 +14,4 @@ const Card = styled.div`
   border-radius: 10px;
   overflow: hidden;
 
-  img{
-    width: 100%;
-  }
 `;
