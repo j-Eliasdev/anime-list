@@ -38,7 +38,7 @@ export const GlobalContextProvider = ({ children }) => {
     dispatch({ type: LOADING });
     const response = await fetch(`${baseUrl}/top/anime?filter=bypopularity`);
     const data = await response.json();
-    dispatch({ type: GET_POPULAR_ANIME, payload: data.data.slice(0, 10) });
+    dispatch({ type: GET_POPULAR_ANIME, payload: data.data.slice(0, 12) });
   };
 
   useEffect(() => {

@@ -7,11 +7,10 @@ export const CardComponent= ({ children }) => {
 
 
 const Card = styled.div`
-  width: 300px;
-  height: 400px;
+  width: 200px;
+  height: 300px;
   background-color: rgba(0, 0, 0, 0.8);
-  border: 2px solid rgba(182, 155, 0, 0.64);
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
 
 `;

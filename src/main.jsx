@@ -3,12 +3,14 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { GlobalContextProvider } from "./context/globalContext.jsx";
-import HeaderComponent from "./components/headerComponent.jsx";
+import NavbarComponent from "./components/navbarComponent.jsx";
+import BtnFilters from "./components/btnFilters.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GlobalContextProvider>
     <BrowserRouter>
-    <HeaderComponent/>
+    <NavbarComponent/>
+    <BtnFilters/>
       <App />
     </BrowserRouter>
   </GlobalContextProvider>
