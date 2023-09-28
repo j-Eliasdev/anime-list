@@ -9,8 +9,8 @@ import BtnFilters from "./components/btnFilters.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GlobalContextProvider>
     <BrowserRouter>
-    <NavbarComponent/>
-    <BtnFilters/>
+      <NavbarComponent />
+      <BtnFilters />
       <App />
     </BrowserRouter>
   </GlobalContextProvider>

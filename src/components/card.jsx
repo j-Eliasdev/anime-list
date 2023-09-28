@@ -7,8 +7,8 @@ export const CardComponent= ({ children }) => {
 
 
 const Card = styled.div`
-  width: 200px;
-  height: 300px;
+  width: 250px;
+  height: 350px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
   overflow: hidden;

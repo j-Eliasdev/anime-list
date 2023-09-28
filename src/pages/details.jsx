@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
-
+import { AiTwotoneStar } from "react-icons/ai";
+import { CardComponent } from "../components/card";
 export default function DetailsPage() {
   const { id } = useParams();
 
@@ -11,7 +12,8 @@ export default function DetailsPage() {
 
   const {
     title,
-    sypnopsis,
+    synopsis,
+    background,
     trailer,
     duration,
     aired,
@@ -30,82 +32,190 @@ export default function DetailsPage() {
     const response = await fetch(`https://api.jikan.moe/v4/anime/${anime}`);
     const data = await response.json();
     setAnime(data.data);
-    console.log(data.data);
+  };
+
+  const GetCharacters = async (anime) => {
+    const response = await fetch(
+      `https://api.jikan.moe/v4/anime/${anime}/characters`
+    );
+    const data = await response.json();
+    setCharacters(data.data);
   };
 
   useEffect(() => {
     GetAnime(id);
+    GetCharacters(id);
   }, [id]);
 
   return (
-    <Container>
-      <Card>
-        <div className="cardImg">
-          <img src={images?.jpg.large_image_url} alt="" />
-        </div>
-        <div className="cardInfo">
+    <>
+      <Container>
+        <div className="img-inf">
+          <div className="img-container">
+            <img src={images?.jpg.large_image_url} alt={background} />
+          </div>
           <div className="infoContent">
             <h1>{title}</h1>
-            <p>
-              <span>Popularidad: </span>
+            <div>
+              <span>aired: </span>
+              {aired?.string}
+            </div>
+            <div>
+              <span>rating: </span>
+              {rating}
+            </div>
+            <div>
+              <span>rank: </span>
+              {rank}
+            </div>
+            <div className="star">
+              <span>
+                <AiTwotoneStar />
+              </span>
+              {score}
+            </div>{" "}
+            <div>
+              <span>score_by: </span>
+              {score_by}
+            </div>
+            <div>
+              <span>popularity: </span>
               {popularity}
-            </p>
-            <p></p>
-            <p>
+            </div>
+            <div>
+              <span>status: </span>
+              {status}
+            </div>
+            <div>
+              <span>source: </span>
+              {source}
+            </div>
+            <div>
+              <span>season: </span>
+              {season}
+            </div>
+            <div>
               <span>Duración: </span>
               {duration}
-            </p>
-            <p>Editora</p>
-            <p>Año de estreno</p>
+            </div>
           </div>
         </div>
-      </Card>
-    </Container>
+        <div className="synopsis">
+          <p>
+            {showMore ? synopsis : synopsis?.substring(0, 450) + "..."}
+            <button
+              onClick={() => {
+                setShowMore(!showMore);
+              }}
+            >
+              {!showMore ? "Ver mas" : "Mostrar menos"}
+            </button>
+          </p>
+        </div>
+      </Container>
+      <div style={{ margin: "10% 0" }}>
+        {trailer?.embed_url && (
+          <iframe
+            src={trailer?.embed_url}
+            title={title}
+            width="800"
+            height="450"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        )}
+      </div>
+      <Cards>
+        {characters?.map((character, index) => {
+          const { images, name } = character.character;
+          return (
+            <div style={{ width: "250px", textAlign: "center" }} key={index}>
+              <CardComponent>
+                {/* <Link to={`/characters/${mail_id}`}></Link> */}
+                <img src={images?.jpg.image_url} alt="" />
+              </CardComponent>
+              <span>{name}</span>
+            </div>
+          );
+        })}
+      </Cards>
+    </>
   );
 }
 
-const Container = styled.section``;
-const Card = styled.div`
-  width: 100%;
-  height: 100%;
+const Container = styled.section`
+  background-color: #152450;
+  overflow: hidden;
+  color: white;
   border-radius: 15px;
-  padding: 5%;
+  gap: 2%;
+  width: auto;
+  padding: 10px;
+  .img-inf {
+    display: flex;
+    gap: 2%;
+  }
+  .img-container {
+    width: 300px;
+    height: auto;
+  }
+  .infoContent {
+    width: 70%;
+    display: inline-block;
+  }
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-top: 0;
+  }
+  .star span {
+    font-size: 20px;
+    color: yellow;
+  }
+  .star {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 1.2rem;
+    color: #028bfc;
+    cursor: pointer;
+  }
+
+  @media (max-width: 750px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  @media (max-width: 600px) {
+    .infoContent {
+      width: 100%;
+    }
+    .img-container {
+      width: 100%;
+    }
+    .img-inf {
+      display: block;
+    }
+  }
+`;
+const Cards = styled.div`
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
-  /* @media (max-width: 1065px) {
-  } */
-
-  p {
-    font-weight: bold;
-  }
-
-  .cardImg {
-    width: 400px;
-    overflow: hidden;
-    background-color: black;
-    border-radius: 15px;
-    border: 2px solid rgba(182, 155, 0, 0.64);
-  }
+  gap: 20px;
   img {
     width: 100%;
     height: 100%;
   }
-  .cardInfo {
-    display: block;
-    background-color: #272a38;
-    color: white;
-    flex-grow: 1;
-    height: 500px;
-    border-radius: 15px;
-    padding: 0px 3%;
-    h1 {
-      color: white;
-      font-size: 2.5em;
-      line-height: 1.1;
-    }
-  }
-  .infoContent {
-    width: 300px;
+  span {
+    color: #b68d40;
   }
 `;

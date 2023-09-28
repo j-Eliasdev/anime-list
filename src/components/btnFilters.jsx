@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 export default function btnFilters() {
   return (
     <Filters>
-      <BtnLink to="/popular">Top 12 Animes</BtnLink>
-      <BtnLink>En transmisión</BtnLink>
-      <BtnLink>Próximos Estrenos</BtnLink>
+      <BtnLink to="/popular">Top 10 Animes</BtnLink>
+      <BtnLink to="/airing">En transmisión</BtnLink>
+      <BtnLink to="/upcoming">Próximos Estrenos</BtnLink>
     </Filters>
   );
 }

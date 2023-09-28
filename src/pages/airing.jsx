@@ -3,12 +3,12 @@ import { styled } from "styled-components";
 import { useGlobalContext } from "../context/globalContext";
 import { Link } from "react-router-dom";
 
-export default function PopularPage() {
-  const { popularAnime, isSearch } = useGlobalContext();
+export default function AiringPage() {
+  const { airingAnime, isSearch } = useGlobalContext();
 
   const conditionalRender = () => {
     if (!isSearch) {
-      return popularAnime.map((anime) => {
+      return airingAnime.map((anime) => {
         return (
           <div
             style={{ width: "250px", textAlign: "center" }}
@@ -29,7 +29,7 @@ export default function PopularPage() {
   return (
     <Container>
       <h1>
-        Top <span>10</span> mejores anime
+        Anime en <span>transmisión</span>
       </h1>
       <Cards>{conditionalRender()}</Cards>
     </Container>
