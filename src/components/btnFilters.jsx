@@ -22,9 +22,16 @@ const Filters = styled.header`
   margin: 10% 0 5% 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   gap: 10px;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
+
 `;
+
+
 const BtnLink = styled.button`
   padding: 15px;
   text-align: center;
@@ -37,7 +44,7 @@ const BtnLink = styled.button`
   font-weight: 600;
   transition: 0.5s ease;
   cursor: pointer;
-  width: 200px;
+  width: 250px;
 
   &:hover {
     background-color: #b68d40;

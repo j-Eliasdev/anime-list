@@ -54,10 +54,10 @@ export default function DetailsPage() {
           <div className="img-container">
             <img src={images?.jpg.large_image_url} alt={background} />
           </div>
-          <div className="infoContent">
+          <Information>
             <h1>{title}</h1>
             <div>
-              <span>aired: </span>
+              <span>Publicado: </span>
               {aired?.string}
             </div>
             <div>
@@ -98,7 +98,7 @@ export default function DetailsPage() {
               <span>Duración: </span>
               {duration}
             </div>
-          </div>
+          </Information>
         </div>
         <div className="synopsis">
           <p>
@@ -113,7 +113,7 @@ export default function DetailsPage() {
           </p>
         </div>
       </Container>
-      <div style={{ margin: "10% 0", width:'350px' }}>
+      <div style={{ margin: "10% 0", width: "350px" }}>
         {trailer?.embed_url && (
           <iframe
             src={trailer?.embed_url}
@@ -159,28 +159,13 @@ const Container = styled.section`
     width: 300px;
     height: auto;
   }
-  .infoContent {
-    width: 70%;
-    display: inline-block;
-  }
   img {
     width: 100%;
     height: auto;
     border-radius: 10px;
   }
-  h1 {
-    font-size: 2.5rem;
-    margin-top: 0;
-  }
-  .star span {
-    font-size: 20px;
-    color: yellow;
-  }
-  .star {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
+
+
   button {
     border: none;
     outline: none;
@@ -190,6 +175,36 @@ const Container = styled.section`
     cursor: pointer;
   }
 
+  @media (max-width: 600px) {
+   
+    .img-container {
+      width: 100%;
+    }
+    .img-inf {
+      display: block;
+    }
+  }
+`;
+
+const Information = styled.div`
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .star span {
+    font-size: 20px;
+    color: yellow;
+  }
+  .star {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-top: 0;
+  }
   @media (max-width: 750px) {
     h1 {
       font-size: 1.5rem;
@@ -199,17 +214,13 @@ const Container = styled.section`
     .infoContent {
       width: 100%;
     }
-    .img-container {
-      width: 100%;
-    }
-    .img-inf {
-      display: block;
-    }
   }
 `;
+
 const Cards = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: space-between;
   gap: 20px;
   img {
     width: 100%;
@@ -217,5 +228,8 @@ const Cards = styled.div`
   }
   span {
     color: #b68d40;
+  }
+  @media (max-width: 600px) {
+    justify-content: center;
   }
 `;

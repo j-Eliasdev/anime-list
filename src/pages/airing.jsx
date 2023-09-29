@@ -50,7 +50,11 @@ const Container = styled.section`
   }
 `;
 const Cards = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: space-between;
   gap: 20px;
+  @media (max-width: 600px) {
+    justify-content: center;   
+  }
 `;
