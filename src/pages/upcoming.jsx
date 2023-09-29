@@ -3,12 +3,12 @@ import { styled } from "styled-components";
 import { useGlobalContext } from "../context/globalContext";
 import { Link } from "react-router-dom";
 
-export default function IncomingPage() {
-  const { upcomingAnime, isSearch } = useGlobalContext();
+export default function UpComingPage() {
+  const { proximoAnime, isSearch} = useGlobalContext();
 
   const conditionalRender = () => {
     if (!isSearch) {
-      return upcomingAnime.map((anime) => {
+      return proximoAnime.map((anime) => {
         return (
           <div
             style={{ width: "250px", textAlign: "center" }}
@@ -29,7 +29,7 @@ export default function IncomingPage() {
   return (
     <Container>
       <h1>
-        Animes próximos a <span>estrenar</span>
+        Próximos <span>anime</span> en estrenos
       </h1>
       <Cards>{conditionalRender()}</Cards>
     </Container>

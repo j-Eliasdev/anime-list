@@ -113,7 +113,7 @@ export default function DetailsPage() {
           </p>
         </div>
       </Container>
-      <div style={{ margin: "10% 0" }}>
+      <div style={{ margin: "10% 0", width:'350px' }}>
         {trailer?.embed_url && (
           <iframe
             src={trailer?.embed_url}

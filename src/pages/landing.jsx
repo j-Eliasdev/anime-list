@@ -2,9 +2,17 @@ import { CardComponent } from "../components/card";
 import { useGlobalContext } from "../context/globalContext";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useEffect } from "react";
 
 export default function LandingPage() {
-  const { allAnime, isSearch, setCurrentPage, currentPage } = useGlobalContext();
+  const { allAnime, getAnime, isSearch, setCurrentPage, currentPage } =
+    useGlobalContext();
+
+  useEffect(() => {
+    getAnime(currentPage);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   const conditionalRender = () => {
     if (!isSearch) {
@@ -31,11 +39,19 @@ export default function LandingPage() {
       <h1>
         Todos los <span>anime</span>
       </h1>
-      <Cards>{conditionalRender()}</Cards>
-      <button onClick={()=> setCurrentPage(currentPage+1)}>Mostrar mas</button>
+      <InfiniteScroll
+        dataLength={allAnime.length}
+        next={() => {
+          setCurrentPage(currentPage + 1);
+        }}
+        hasMore={true}
+        loader={<h4>Loading...</h4>}
+        scrollableTarget="infiniteScroll"
+      >
+        <Cards>{conditionalRender()}</Cards>
+      </InfiniteScroll>
     </Container>
   );
-
 }
 
 const Container = styled.section`

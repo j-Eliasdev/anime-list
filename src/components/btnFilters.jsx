@@ -1,13 +1,19 @@
 /* eslint-disable react-refresh/only-export-components */
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../context/globalContext";
 
 export default function btnFilters() {
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const {getPopularAnime, getAiringAnime, getUpcomingAnime} = useGlobalContext();
+
   return (
     <Filters>
-      <BtnLink to="/popular">Top 10 Animes</BtnLink>
-      <BtnLink to="/airing">En transmisión</BtnLink>
-      <BtnLink to="/upcoming">Próximos Estrenos</BtnLink>
+      <Link to="/"> <BtnLink>Todos los anime</BtnLink> </Link>
+      <Link to="/popular"> <BtnLink onClick={() =>{getPopularAnime()}}>Top 10 Animes</BtnLink> </Link>
+      <Link to="/airing"><BtnLink onClick={() =>{getAiringAnime()}}>En transmisión</BtnLink></Link>
+      <Link to="/upcoming"><BtnLink onClick={() =>{getUpcomingAnime()}}>Próximos Estrenos</BtnLink></Link>
     </Filters>
   );
 }
@@ -16,10 +22,10 @@ const Filters = styled.header`
   margin: 10% 0 5% 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 10px;
 `;
-const BtnLink = styled(Link)`
+const BtnLink = styled.button`
   padding: 15px;
   text-align: center;
   font-size: 15px;

@@ -1,7 +1,6 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useReducer,
   useState,
 } from "react";
@@ -25,7 +24,7 @@ const reducer = (state, action) => {
     case GET_AIRING_ANIME:
       return { ...state, airingAnime: action.payload, loading: false };
     case GET_UPCOMING_ANIME:
-      return { ...state, upcomingAnime: action.payload, loading: false };
+      return { ...state, proximoAnime: action.payload, loading: false };
     case GET_ALL_ANIME:
       return { ...state, allAnime: action.payload, loading: false };
     case SEARCH:
@@ -40,7 +39,7 @@ export const GlobalContextProvider = ({ children }) => {
   const initialState = {
     allAnime: [],
     popularAnime: [],
-    upcomingAnime: [],
+    proximoAnime: [],
     airingAnime: [],
     pictures: [],
     isSearch: false,
@@ -113,7 +112,7 @@ export const GlobalContextProvider = ({ children }) => {
     dispatch({ type: LOADING });
     const response = await fetch(`${baseUrl}/top/anime?filter=upcoming`);
     const data = await response.json();
-    dispatch({ type: GET_UPCOMING_ANIME, payload: data });
+    dispatch({ type: GET_UPCOMING_ANIME, payload: data.data });
   };
 
   const searchAnime = async (anime) => {
@@ -125,12 +124,6 @@ export const GlobalContextProvider = ({ children }) => {
     dispatch({ type: SEARCH, payload: data.data });
   };
 
-  useEffect(() => {
-    getPopularAnime();
-    getAiringAnime();
-    getAnime(currentPage);
-    // getUpcomingAnime();
-  }, [currentPage]);
 
   return (
     <GlobalContext.Provider
@@ -140,6 +133,10 @@ export const GlobalContextProvider = ({ children }) => {
         handleSubmit,
         searchAnime,
         setCurrentPage,
+        getPopularAnime,
+        getAiringAnime,
+        getUpcomingAnime,
+        getAnime,
         currentPage,
         search,
       }}
