@@ -1,7 +1,6 @@
-import { CardComponent } from "../components/card";
+import { CardComponent,CardsComponent,ContainerComponent } from "../components/card";
 import { useGlobalContext } from "../context/globalContext";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect } from "react";
 
@@ -11,7 +10,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     getAnime(currentPage);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const conditionalRender = () => {
@@ -35,7 +34,7 @@ export default function LandingPage() {
   };
 
   return (
-    <Container>
+    <ContainerComponent>
       <h1>
         Todos los <span>anime</span>
       </h1>
@@ -48,31 +47,8 @@ export default function LandingPage() {
         loader={<h4>Loading...</h4>}
         scrollableTarget="infiniteScroll"
       >
-        <Cards>{conditionalRender()}</Cards>
+        <CardsComponent>{conditionalRender()}</CardsComponent>
       </InfiniteScroll>
-    </Container>
+    </ContainerComponent>
   );
 }
-
-const Container = styled.section`
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  span {
-    color: #b68d40;
-  }
-  h1 {
-    color: white;
-    font-size: 2.5em;
-  }
-`;
-const Cards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  justify-content: space-between;
-  gap: 20px;
-  @media (max-width: 600px) {
-    justify-content: center;   
-  }
-`;

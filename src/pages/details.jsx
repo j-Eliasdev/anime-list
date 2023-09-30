@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { AiTwotoneStar } from "react-icons/ai";
-import { CardComponent } from "../components/card";
+import { AiTwotoneStar, AiTwotoneHeart } from "react-icons/ai";
+import {
+  CardComponent,
+  CardsComponent,
+  ContainerComponent,
+} from "../components/card";
 export default function DetailsPage() {
   const { id } = useParams();
 
-  const [anime, setAnime] = useState({});
+  const [anime, setAnime] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [showMore, setShowMore] = useState(false);
 
@@ -15,17 +19,13 @@ export default function DetailsPage() {
     synopsis,
     background,
     trailer,
-    duration,
-    aired,
-    season,
     images,
-    rank,
     score,
-    score_by,
-    popularity,
+    scored_by,
     status,
-    rating,
-    source,
+    episodes,
+    favorites,
+    year,
   } = anime;
 
   const GetAnime = async (anime) => {
@@ -48,7 +48,7 @@ export default function DetailsPage() {
   }, [id]);
 
   return (
-    <>
+    <section>
       <Container>
         <div className="img-inf">
           <div className="img-container">
@@ -56,51 +56,64 @@ export default function DetailsPage() {
           </div>
           <Information>
             <h1>{title}</h1>
-            <div>
-              <span>Publicado: </span>
-              {aired?.string}
-            </div>
-            <div>
-              <span>rating: </span>
-              {rating}
-            </div>
-            <div>
-              <span>rank: </span>
-              {rank}
-            </div>
-            <div className="star">
-              <span>
-                <AiTwotoneStar />
-              </span>
-              {score}
-            </div>{" "}
-            <div>
-              <span>score_by: </span>
-              {score_by}
-            </div>
-            <div>
-              <span>popularity: </span>
-              {popularity}
-            </div>
-            <div>
-              <span>status: </span>
-              {status}
-            </div>
-            <div>
-              <span>source: </span>
-              {source}
-            </div>
-            <div>
-              <span>season: </span>
-              {season}
-            </div>
-            <div>
-              <span>Duración: </span>
-              {duration}
-            </div>
+
+            {year ? (
+              <div>
+                {" "}
+                <span>Emitido en </span>
+                {year}{" "}
+              </div>
+            ) : (
+              ""
+            )}
+            {episodes ? (
+              <div>
+                <span>Total de episodios: </span>
+                {episodes}
+              </div>
+            ) : (
+              ""
+            )}
+            {status ? (
+              <div>
+                <span>Estado: </span>
+                {status}
+              </div>
+            ) : (
+              ""
+            )}
+            {score ? (
+              <div className="star">
+                <span>
+                  <AiTwotoneStar />
+                </span>
+                {score}
+              </div>
+            ) : (
+              ""
+            )}
+            {favorites ? (
+              <div className="heart">
+                <span>
+                  <AiTwotoneHeart />
+                </span>
+                {favorites}
+              </div>
+            ) : (
+              ""
+            )}
+            {scored_by ? (
+              <div>
+                {scored_by}
+                <span> Votos</span>
+              </div>
+            ) : (
+              ""
+            )}
           </Information>
         </div>
-        <div className="synopsis">
+        <div>
+          <h2>Synopsis</h2>
           <p>
             {showMore ? synopsis : synopsis?.substring(0, 450) + "..."}
             <button
@@ -108,44 +121,53 @@ export default function DetailsPage() {
                 setShowMore(!showMore);
               }}
             >
-              {!showMore ? "Ver mas" : "Mostrar menos"}
+              {!showMore ? "MÁS DETALLES" : "MENOS DETALLES"}
             </button>
           </p>
         </div>
       </Container>
-      <div style={{ margin: "10% 0", width: "350px" }}>
-        {trailer?.embed_url && (
-          <iframe
-            src={trailer?.embed_url}
-            title={title}
-            width="800"
-            height="450"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        )}
-      </div>
-      <Cards>
-        {characters?.map((character, index) => {
-          const { images, name } = character.character;
-          return (
-            <div style={{ width: "250px", textAlign: "center" }} key={index}>
-              <CardComponent>
-                {/* <Link to={`/characters/${mail_id}`}></Link> */}
-                <img src={images?.jpg.image_url} alt="" />
-              </CardComponent>
-              <span>{name}</span>
-            </div>
-          );
-        })}
-      </Cards>
-    </>
+
+      {/* TRAILER */}
+
+      {trailer?.embed_url ? (
+        <SectionTrailer>
+          <h1>Trailer</h1>
+          <div className="div-trailer">
+            <iframe
+              src={trailer?.embed_url}
+              title={title}
+              className="trailer"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </SectionTrailer>
+      ) : (
+        ""
+      )}
+
+      <ContainerComponent>
+        <h1>Personajes</h1>
+        <CardsComponent>
+          {characters?.map((character, index) => {
+            const { images, name } = character.character;
+            return (
+              <div key={index} style={{ width: "250px", textAlign: "center" }}>
+                <CardComponent>
+                  <img src={images?.jpg.image_url} alt="" />
+                </CardComponent>
+                <span>{name}</span>
+              </div>
+            );
+          })}
+        </CardsComponent>
+      </ContainerComponent>
+    </section>
   );
 }
 
 const Container = styled.section`
-  background-color: #152450;
-  overflow: hidden;
+  background-color: #050217;
   color: white;
   border-radius: 15px;
   gap: 2%;
@@ -159,24 +181,26 @@ const Container = styled.section`
     width: 300px;
     height: auto;
   }
+  h2 {
+    color: #b68d40;
+  }
   img {
     width: 100%;
     height: auto;
     border-radius: 10px;
   }
 
-
   button {
     border: none;
     outline: none;
     background-color: transparent;
-    font-size: 1.2rem;
+    font-weight: 600;
+    font-size: 12px;
     color: #028bfc;
     cursor: pointer;
   }
 
   @media (max-width: 600px) {
-   
     .img-container {
       width: 100%;
     }
@@ -188,48 +212,82 @@ const Container = styled.section`
 
 const Information = styled.div`
   width: 70%;
+  height: 350px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 7%;
+  
+
+  span {
+    font-weight: 600;
+    font-family: sans-serif;
+  }
 
   .star span {
     font-size: 20px;
-    color: yellow;
+    color: #d6d61f;
   }
-  .star {
+
+  .heart span {
+    font-size: 20px;
+    color: #b90808;
+  }
+
+  .star,
+  .heart {
     display: flex;
-    align-items: center;
     gap: 3px;
   }
   h1 {
+    font-family: cursive;
     font-size: 2.5rem;
-    margin-top: 0;
+    margin: 0px 0px;
+    color: #b68d40;
   }
-  @media (max-width: 750px) {
+  @media (max-width: 800px) {
     h1 {
       font-size: 1.5rem;
     }
   }
   @media (max-width: 600px) {
+    width: 100%;
+    margin-bottom: 10%;
     .infoContent {
       width: 100%;
     }
   }
 `;
 
-const Cards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  justify-content: space-between;
-  gap: 20px;
-  img {
+const SectionTrailer = styled.section`
+  margin: 10% 0px;
+
+  h1 {
+    font-size: 2.5em;
+  }
+  .div-trailer {
+    height: 750px;
+
+    @media (max-width: 1100px) {
+      height: 550px;
+    }
+    @media (max-width: 850px) {
+      height: 450px;
+    }
+    @media (max-width: 650px) {
+      height: 350px;
+    }
+    @media (max-width: 500px) {
+      height: 250px;
+    }
+    @media (max-width: 380px) {
+      height: 190px;
+    }
+  }
+
+  .trailer {
     width: 100%;
+    border-radius: 7px;
+    border: none;
     height: 100%;
-  }
-  span {
-    color: #b68d40;
-  }
-  @media (max-width: 600px) {
-    justify-content: center;
   }
 `;

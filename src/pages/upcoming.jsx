@@ -1,4 +1,4 @@
-import { CardComponent } from "../components/card";
+import { CardComponent,CardsComponent,ContainerComponent } from "../components/card";
 import { styled } from "styled-components";
 import { useGlobalContext } from "../context/globalContext";
 import { Link } from "react-router-dom";
@@ -10,8 +10,7 @@ export default function UpComingPage() {
     if (!isSearch) {
       return proximoAnime.map((anime) => {
         return (
-          <div
-            style={{ width: "250px", textAlign: "center" }}
+          <CardContainer
             key={anime.mal_id}
           >
             <CardComponent>
@@ -20,41 +19,24 @@ export default function UpComingPage() {
               </Link>
             </CardComponent>{" "}
             <span>{anime.title}</span>
-          </div>
+          </CardContainer>
         );
       });
     }
   };
 
   return (
-    <Container>
+    <ContainerComponent>
       <h1>
         Próximos <span>anime</span> en estrenos
       </h1>
-      <Cards>{conditionalRender()}</Cards>
-    </Container>
+      <CardsComponent>{conditionalRender()}</CardsComponent>
+    </ContainerComponent>
   );
 }
 
-const Container = styled.section`
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  span {
-    color: #b68d40;
-  }
-  h1 {
-    color: white;
-    font-size: 2.5em;
-  }
-`;
-const Cards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  justify-content: space-between;
-  gap: 20px;
-  @media (max-width: 600px) {
-    justify-content: center;   
-  }
-`;
+const CardContainer = styled.div`
+   width:250px;
+   text-align: center
+
+`

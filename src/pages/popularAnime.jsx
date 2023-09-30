@@ -1,5 +1,4 @@
-import { CardComponent } from "../components/card";
-import { styled } from "styled-components";
+import { CardComponent, CardsComponent, ContainerComponent } from "../components/card";
 import { useGlobalContext } from "../context/globalContext";
 import { Link } from "react-router-dom";
 
@@ -18,7 +17,7 @@ export default function PopularPage() {
               <Link to={`/anime/${anime.mal_id}`}>
                 <img src={anime.images.jpg.large_image_url} alt={""} />
               </Link>
-            </CardComponent>{" "}
+            </CardComponent>
             <span>{anime.title}</span>
           </div>
         );
@@ -27,34 +26,13 @@ export default function PopularPage() {
   };
 
   return (
-    <Container>
+    <ContainerComponent>
       <h1>
         Top <span>10</span> mejores anime
       </h1>
-      <Cards>{conditionalRender()}</Cards>
-    </Container>
+      <CardsComponent>{conditionalRender()}</CardsComponent>
+    </ContainerComponent>
   );
 }
 
-const Container = styled.section`
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  span {
-    color: #b68d40;
-  }
-  h1 {
-    color: white;
-    font-size: 2.5em;
-  }
-`;
-const Cards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  justify-content: space-between;
-  gap: 20px;
-  @media (max-width: 600px) {
-    justify-content: center;   
-  }
-`;
+

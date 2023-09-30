@@ -21,8 +21,14 @@ export default function HeaderComponent() {
 }
 
 const Navbar = styled.nav`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 5%;
+  background-color: #050217;
   display: flex;
-  height: 50px;
+  height: 85px;
   justify-content: space-between;
   align-items: center;
 
