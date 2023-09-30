@@ -3,38 +3,25 @@ import {
   CardsComponent,
   ContainerComponent,
 } from "../components/card";
+import { styled } from "styled-components";
 import { useGlobalContext } from "../context/globalContext";
 import { Link } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { useEffect } from "react";
 
-export default function LandingPage() {
-  const {
-    allAnime,
-    searchResults,
-    getAnime,
-    isSearch,
-    setCurrentPage,
-    currentPage,
-  } = useGlobalContext();
-
-  useEffect(() => {
-    getAnime(currentPage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
+export default function UpComingPage() {
+  const { proximoAnime, searchResults, isSearch } = useGlobalContext();
 
   const conditionalRender = () => {
     if (!isSearch) {
-      return allAnime.map((anime, index) => {
+      return proximoAnime.map((anime) => {
         return (
-          <div style={{ width: "250px", textAlign: "center" }} key={index}>
+          <CardContainer key={anime.mal_id}>
             <CardComponent>
               <Link to={`/anime/${anime.mal_id}`}>
                 <img src={anime.images.jpg.large_image_url} alt={""} />
               </Link>
             </CardComponent>{" "}
             <span>{anime.title}</span>
-          </div>
+          </CardContainer>
         );
       });
     } else {
@@ -60,22 +47,18 @@ export default function LandingPage() {
     <ContainerComponent>
       {!isSearch ? (
         <h1>
-          Todos los <span>anime</span>
+          Próximos <span>anime</span> en estrenos
         </h1>
       ) : (
         ""
       )}
 
-      <InfiniteScroll
-        dataLength={allAnime.length}
-        next={() => {
-          setCurrentPage(currentPage + 1);
-        }}
-        hasMore={true}
-        scrollableTarget="infiniteScroll"
-      >
-        <CardsComponent>{conditionalRender()}</CardsComponent>
-      </InfiniteScroll>
+      <CardsComponent>{conditionalRender()}</CardsComponent>
     </ContainerComponent>
   );
 }
+
+const CardContainer = styled.div`
+  width: 250px;
+  text-align: center;
+`;
