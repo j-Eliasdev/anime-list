@@ -32,6 +32,7 @@ const Cards = styled.div`
   grid-template-columns: repeat(auto-fill, 250px);
   justify-content: space-between;
   gap: 20px;
+  padding: 6px;
   @media (max-width: 600px) {
     justify-content: center;   
   }

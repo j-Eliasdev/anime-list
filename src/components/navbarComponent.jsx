@@ -4,17 +4,24 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useGlobalContext } from "../context/globalContext";
 
 export default function HeaderComponent() {
-
-  const { search,  handleChange} = useGlobalContext()
+  const { search,  handleSubmit, handleChange } =
+    useGlobalContext();
 
   return (
     <Navbar>
       <Link to="/">
         <span>JB</span>Anime
       </Link>
-      <SearchContent>
-        <Search type="search" value={search} onChange={handleChange} placeholder="Buscar ...." />
-        <BiSearchAlt className="icons-search" />
+      <SearchContent onSubmit={handleSubmit}>
+          <Search
+            type="search"
+            value={search}
+            onChange={handleChange}
+            placeholder="Buscar ...."
+          />
+          <button className="icons-search">
+            <BiSearchAlt className="icon" />
+          </button>
       </SearchContent>
     </Navbar>
   );
@@ -65,7 +72,7 @@ const Search = styled.input`
     display: none;
   }
 `;
-const SearchContent = styled.div`
+const SearchContent = styled.form`
   position: relative;
   height: 100%;
   width: 50%;
@@ -73,13 +80,17 @@ const SearchContent = styled.div`
   justify-content: end;
   align-items: center;
 
-  .icons-search{
+  .icons-search {
     position: absolute;
-    color: white;
+    width: 32px;
     right: 3%;
     background-color: #050217;
     padding: 5px;
     border-radius: 50%;
   }
 
+  .icon{
+    color: white;
+    font-size: 15px;
+  }
 `;

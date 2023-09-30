@@ -239,7 +239,6 @@ const Information = styled.div`
     gap: 3px;
   }
   h1 {
-    font-family: cursive;
     font-size: 2.5rem;
     margin: 0px 0px;
     color: #b68d40;

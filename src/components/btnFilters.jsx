@@ -1,47 +1,61 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-refresh/only-export-components */
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context/globalContext";
 
 export default function btnFilters() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { getPopularAnime, getAiringAnime, getUpcomingAnime } = useGlobalContext();
+  const { getPopularAnime, getAiringAnime, getUpcomingAnime, isSearch } =
+    useGlobalContext();
 
   return (
-    <Filters>
-      <Link to="/">
-        {" "}
-        <BtnLink>Todos los anime</BtnLink>{" "}
-      </Link>
-      <Link to="/popular">
-        {" "}
-        <BtnLink
-          onClick={() => {
-            getPopularAnime();
-          }}
-        >
-          Top 10 Animes
-        </BtnLink>{" "}
-      </Link>
-      <Link to="/airing">
-        <BtnLink
-          onClick={() => {
-            getAiringAnime();
-          }}
-        >
-          En transmisión
-        </BtnLink>
-      </Link>
-      <Link to="/upcoming">
-        <BtnLink
-          onClick={() => {
-            getUpcomingAnime();
-          }}
-        >
-          Próximos Estrenos
-        </BtnLink>
-      </Link>
-    </Filters>
+    <>
+      {!isSearch ? (
+        <Filters id="myBtn">
+          <Link to="/">
+            {" "}
+            <BtnLink>Todos los anime</BtnLink>{" "}
+          </Link>
+          <Link to="/popular">
+            {" "}
+            <BtnLink
+              className="btn"
+              onClick={() => {
+                getPopularAnime();
+              }}
+            >
+              Top 10 Animes
+            </BtnLink>{" "}
+          </Link>
+          <Link to="/airing">
+            <BtnLink
+              className="btn"
+              onClick={() => {
+                getAiringAnime();
+              }}
+            >
+              En transmisión
+            </BtnLink>
+          </Link>
+          <Link to="/upcoming">
+            <BtnLink
+              className="btn"
+              onClick={() => {
+                getUpcomingAnime();
+              }}
+            >
+              Próximos Estrenos
+            </BtnLink>
+          </Link>
+        </Filters>
+      ) : (
+        <Filters>
+          <Link to="/">
+            <BtnLink className="active">Animes Encontrados</BtnLink>
+          </Link>
+        </Filters>
+      )}
+    </>
   );
 }
 
@@ -51,6 +65,11 @@ const Filters = styled.header`
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 10px;
+
+  .active{
+    background-color: #b68d40;
+    color: #050217;
+  }
 
   @media (max-width: 1060px) {
     margin-top: 120px;

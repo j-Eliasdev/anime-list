@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useReducer,
-  useState,
-} from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 
 const GlobalContext = createContext();
 
@@ -62,6 +57,7 @@ export const GlobalContextProvider = ({ children }) => {
     if (search) {
       searchAnime(search);
       state.isSearch = true;
+     
     } else {
       state.isSearch = false;
       alert("Please enter a search term");
@@ -70,28 +66,27 @@ export const GlobalContextProvider = ({ children }) => {
 
   const getAnime = async (currentPage) => {
     dispatch({ type: LOADING });
-    
 
     try {
       let totalPages = null;
-  
-     
-        const response = await fetch(`https://api.jikan.moe/v4/top/anime?per_page=25&page=${currentPage}`);
-        const data = await response.json();
-  
-        // Actualiza el total de páginas si aún no lo hemos hecho.
-        if (totalPages === null) {
-          totalPages = data.pagination.last_visible_page;
-        }
-  
-        // Combina los objetos de la respuesta con los objetos existentes.
-        state.allAnime = [...state.allAnime, ...data.data];
-        currentPage++;
-      
-  
+
+      const response = await fetch(
+        `https://api.jikan.moe/v4/top/anime?per_page=25&page=${currentPage}`
+      );
+      const data = await response.json();
+
+      // Actualiza el total de páginas si aún no lo hemos hecho.
+      if (totalPages === null) {
+        totalPages = data.pagination.last_visible_page;
+      }
+
+      // Combina los objetos de la respuesta con los objetos existentes.
+      state.allAnime = [...state.allAnime, ...data.data];
+      currentPage++;
+
       dispatch({ type: GET_ALL_ANIME, payload: state.allAnime });
     } catch (error) {
-      console.error('Error al obtener datos de la API:', error);
+      console.error("Error al obtener datos de la API:", error);
     }
   };
 
@@ -99,7 +94,7 @@ export const GlobalContextProvider = ({ children }) => {
     dispatch({ type: LOADING });
     const response = await fetch(`${baseUrl}/top/anime?filter=bypopularity`);
     const data = await response.json();
-    dispatch({ type: GET_POPULAR_ANIME, payload: data.data.slice(0,10) });
+    dispatch({ type: GET_POPULAR_ANIME, payload: data.data.slice(0, 10) });
   };
   const getAiringAnime = async () => {
     dispatch({ type: LOADING });
@@ -118,12 +113,11 @@ export const GlobalContextProvider = ({ children }) => {
   const searchAnime = async (anime) => {
     dispatch({ type: LOADING });
     const response = await fetch(
-      `${baseUrl}/search/anime?q=${anime}&order_by=popularity&sort=asc&sfw`
+      `https://api.jikan.moe/v4/anime?q=${anime}&order_by=popularity&sort=asc&sfw`
     );
     const data = await response.json();
     dispatch({ type: SEARCH, payload: data.data });
   };
-
 
   return (
     <GlobalContext.Provider
